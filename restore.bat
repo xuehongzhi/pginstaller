@@ -6,7 +6,7 @@ cd /d %~dp0
 set logfile=restore.log
 
 if not defined PGDATABASE (
-set PGDATABASE=hhzj
+set PGDATABASE=wyzx
 )
 if not defined PGUSER (
 set PGUSER=postgres

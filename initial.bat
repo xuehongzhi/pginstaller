@@ -1,8 +1,7 @@
 @echo off
 cd /d %~dp0
 set role=equiptr
-set SCHEMA=%role%
-set PGDATABASE=testhh
+set PGDATABASE=wyzx
 
 set SCHEMA=%role%
 set PGPORT=5432
@@ -14,9 +13,9 @@ set PASSWORD=equip678
 set PYPATH=c:\users\xuehz\pywithdj
 set path=%PYPATH%;%pypath%\scripts;%PGPATH%;%PATH%
 
-rem call backup.bat
+call backup.bat
 call :create_role_SCHEMA
-call :migrate_database
+rem call :migrate_database
 if "%errorlevel%" NEQ  "0" (
   goto :end
 )
