@@ -17,12 +17,13 @@ set pgpassword=postgres
 
 if not defined pgpath (
 set pgpath="d:\program files\postgresql\9.4\bin"
-set path=!pgpath:~1,-1!;!path!
 )
-psql -d postgres -c "drop database if exists %pgdatabase% cascade;" >%logfile% >2&1
+set path=!pgpath:~1,-1!;!path!
 psql -d postgres -c "create role %role%;">%logfile% >2&1
 psql -d postgres -c "alter role %role% with CREATEUSER LOGIN PASSWORD '%PASSWORD%';">%logfile% >2&1
-psql -d postgres  -c "create database %PGDATABASE% with owner=%role%;">%logfile% >2&1
+psql -d postgres -c "create database %pgdatabase% with owner=%role%;" >%logfile% >2&1
+psql -d %pgdatabase% -c "drop schema if exists %role% cascade;" >%logfile% >2&1
+psql -d %pgdatabase%  -c "create schema %role% authorization %role%;Set search_path to %role%;">%logfile% >2&1
 if %errorlevel% ==0 (
  @echo "create db success!!!"
 ) else (
@@ -30,3 +31,4 @@ if %errorlevel% ==0 (
 )
 
 pg_restore.exe -e %BACKUP_FILE%
+
